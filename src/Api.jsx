@@ -1,5 +1,9 @@
 // src/Api.jsx
 // Unified API call wrapper for authenticated and unauthenticated requests
+
+const BASE_URL = import.meta.env.VITE_API_URL;
+
+
 export const apiCall = async ({
   url,
   method = "GET",
@@ -31,7 +35,7 @@ export const apiCall = async ({
 // Log in an admin user with email and password
 export const loginUser = async (email, password) => {
   return apiCall({
-    url: "http://localhost:5005/admin/auth/login",
+    url: `${BASE_URL}/admin/auth/login`,
     method: "POST",
     token: false,
     body: { email, password },
@@ -41,7 +45,7 @@ export const loginUser = async (email, password) => {
 // Register a new admin user
 export const registerUser = async (email, password, name) => {
   return apiCall({
-    url: "http://localhost:5005/admin/auth/register",
+    url: `${BASE_URL}/admin/auth/regiser`,
     method: "POST",
     token: false,
     body: { email, password, name },
@@ -51,7 +55,7 @@ export const registerUser = async (email, password, name) => {
 // Logout the currently logged-in user
 export const logoutUser = async () => {
   return apiCall({
-    url: "http://localhost:5005/admin/auth/logout",
+    url: `${BASE_URL}/admin/auth/logou`,
     method: "POST",
     token: true,
     body: {},
@@ -61,8 +65,8 @@ export const logoutUser = async () => {
 // Get all games owned by the logged-in user, sorted by creation time (newest first)
 export const getGames = async () => {
   const data = await apiCall({
-    url: "http://localhost:5005/admin/games",
-    method: "GET",
+    url: `${BASE_URL}/admin/games`,
+   method: "GET",
     token: true,
   });
 
@@ -74,8 +78,8 @@ export const getGames = async () => {
 // Overwrite the current game list (used internally by createGame)
 export const putGames = async (games) => {
   return apiCall({
-    url: "http://localhost:5005/admin/games",
-    method: "PUT",
+    url: `${BASE_URL}/admin/games`,
+   method: "PUT",
     token: true,
     body: { games },
   });
@@ -115,7 +119,7 @@ export const createGame = async (name, thumbnail = "") => {
 // Start, advance, or end a game session
 export const mutateGame = async (gameId, mutationType) => {
   return apiCall({
-    url: `http://localhost:5005/admin/game/${gameId}/mutate`,
+    url: `${BASE_URL}/admin/game/${gamId}/mutate`,
     method: "POST",
     token: true,
     body: { mutationType },
@@ -125,7 +129,7 @@ export const mutateGame = async (gameId, mutationType) => {
 // Get the current status of a session (e.g., waiting, in progress, ended)
 export const getSessionStatus = async (sessionId) => {
   return apiCall({
-    url: `http://localhost:5005/admin/session/${sessionId}/status`,
+    url: `${BASE_URL}/admin/session/${essionId}/status`,
     method: "GET",
     token: true,
   });
@@ -134,7 +138,7 @@ export const getSessionStatus = async (sessionId) => {
 // Get the final results of a completed session
 export const getSessionResults = async (sessionId) => {
   return apiCall({
-    url: `http://localhost:5005/admin/session/${sessionId}/results`,
+    url: `${BASE_URL}/admin/session/${essionId}/results`,
     method: "GET",
     token: true,
   });
@@ -143,7 +147,7 @@ export const getSessionResults = async (sessionId) => {
 // Player joins a session with a name (or "__validate" to test if session exists)
 export const joinSession = async (sessionId, name) => {
   return apiCall({
-    url: `http://localhost:5005/play/join/${sessionId}`,
+    url: `${BASE_URL}/play/join/${sessonId}`,
     method: "POST",
     token: false,
     body: { name },
@@ -153,7 +157,7 @@ export const joinSession = async (sessionId, name) => {
 // Get the status of a player (whether session has started or ended)
 export const getPlayerStatus = async (playerId) => {
   return apiCall({
-    url: `http://localhost:5005/play/${playerId}/status`,
+    url: `${BASE_URL}/play/${playerId}status`,
     method: "GET",
     token: false,
   });
@@ -162,7 +166,7 @@ export const getPlayerStatus = async (playerId) => {
 // Get the current question for a player
 export const getCurrentQuestion = async (playerId) => {
   return apiCall({
-    url: `http://localhost:5005/play/${playerId}/question`,
+    url: `${BASE_URL}/play/${playerId}question`,
     method: "GET",
     token: false,
   });
@@ -171,7 +175,7 @@ export const getCurrentQuestion = async (playerId) => {
 // Submit a player's answer for the current question
 export const submitAnswer = async (playerId, answer) => {
   return apiCall({
-    url: `http://localhost:5005/play/${playerId}/answer`,
+    url: `${BASE_URL}/play/${playerId}answer`,
     method: "PUT",
     token: false,
     body: answer,
@@ -181,7 +185,7 @@ export const submitAnswer = async (playerId, answer) => {
 // Get the correct answer for the current question (after it's been submitted)
 export const getCorrectAnswer = async (playerId) => {
   return apiCall({
-    url: `http://localhost:5005/play/${playerId}/answer`,
+    url: `${BASE_URL}/play/${playerId}answer`,
     method: "GET",
     token: false,
   });
@@ -190,7 +194,7 @@ export const getCorrectAnswer = async (playerId) => {
 // Get final result summary for a specific player
 export const getPlayerResult = async (playerId) => {
   return apiCall({
-    url: `http://localhost:5005/play/${playerId}/results`,
+    url: `${BASE_URL}/play/${playerId}results`,
     method: "GET",
     token: false,
   });
