@@ -3,7 +3,6 @@
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-
 export const apiCall = async ({
   url,
   method = "GET",
