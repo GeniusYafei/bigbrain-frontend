@@ -45,7 +45,7 @@ export const loginUser = async (email, password) => {
 // Register a new admin user
 export const registerUser = async (email, password, name) => {
   return apiCall({
-    url: `${BASE_URL}/admin/auth/regiser`,
+    url: `${BASE_URL}/admin/auth/register`,
     method: "POST",
     token: false,
     body: { email, password, name },
