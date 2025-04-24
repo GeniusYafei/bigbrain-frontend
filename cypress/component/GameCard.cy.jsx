@@ -9,7 +9,7 @@ describe("GameCard Component", () => {
   let testGame;
 
   // Load test data and setup localStorage token before each test
-  beforeEach(function () {
+  beforeEach(() => {
     cy.fixture("game.json").then((data) => {
       // Get a specific game from the fixture by ID
       testGame = data.games["742203142"];
